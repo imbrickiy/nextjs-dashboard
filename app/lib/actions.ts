@@ -1,5 +1,5 @@
 ﻿'use server'
-
+import { signIn } from '@/auth';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
@@ -19,6 +19,20 @@ const FormSchema = z.object({
   }),
   date: z.string(),
 });
+
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', Object.fromEntries(formData));
+  } catch (error) {
+    if ((error as Error).message.includes('CredentialsSignin')) {
+      return 'CredentialSignin';
+    }
+    throw error;
+  }
+}
 
 // This is temporary until @types/react-dom is updated
 export type State = {
