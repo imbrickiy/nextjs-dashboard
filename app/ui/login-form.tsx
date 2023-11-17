@@ -75,7 +75,9 @@ export default function LoginForm() {
               </>
             )}
           </div>
-        </div>
+      </div>
+      <p><div className='text-2xl'>Demo email:</div> user@nextmail.com</p>
+      <p><div className='text-2xl'>Demo password:</div> 123456</p>
     </form>
   );
 }
